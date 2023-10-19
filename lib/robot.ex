@@ -1,69 +1,69 @@
 defmodule ToyRobot.Robot do
+  alias ToyRobot.Robot
+  defstruct [north: 0, east: 0, facing: :north]
+
+# Function to ensure robot is moving in specified direction
+  def move(%Robot{facing: facing} = robot) do
+    case facing do
+      :north -> robot |> move_north
+      :east -> robot |> move_east
+      :south -> robot |> move_south
+      :west -> robot |> move_west
+    end
+  end
+
   @doc """
-  Moves the robot west one space
+  Turns the Robot left
 
-  ## Examples
+     iex>alias ToyRobot.Robot
+     ToyRobot.Robot
+     iex> robot = %Robot{facing: :north}
+     %Robot{facing: :north}
+     iex> robot |> Robot.turn_left()
+     %Robot{facing: :west}
 
-      iex> alias ToyRobot.Robot
-      ToyRobot.Robot
-      iex> robot = %{east: 0}
-      %{east: 0}
-      iex> robot |> Robot.move_west()
-      %{east: -1}
-      iex> robot |> Robot.move_west() |> Robot.move_west() |> Robot.move_west()
-      %{east: -3}
-
-  Moves the robot east one space
-
-  ## Examples
-
-      iex> alias ToyRobot.Robot
-      ToyRobot.Robot
-      iex> robot = %{east: 0}
-      %{east: 0}
-      iex> robot |> Robot.move_east()
-      %{east: 1}
-      iex> robot |> Robot.move_east() |> Robot.move_east() |> Robot.move_east()
-      %{east: 3}
-
-  Moves the robot north on space
-
-  ## Examples
-      iex> alias ToyRobot.Robot
-      ToyRobot.Robot
-      iex> robot = %{north: 0}
-      %{north: 0}
-      iex> robot |> Robot.move_north()
-      %{north: 1}
-      iex> robot |> Robot.move_north() |> Robot.move_north() |> Robot.move_north()
-      %{north: 3}
-
-  Move the robot south one space
-
-  ## Examples
-      iex>alias ToyRobot.Robot
-      ToyRobot.Robot
-      iex> robot = %{north: 0}
-      %{north: 0}
-      iex> robot |> Robot.move_south()
-      %{north: -1}
-      iex> robot |> Robot.move_south() |> Robot.move_south() |> Robot.move_south()
-      %{north: -3}
   """
-
-  def move_east(robot) do
-    %{east: robot.east + 1}
+  def turn_left(%Robot{facing: facing}) do
+    case facing  do
+      :north -> %Robot{facing: :west}
+      :east  -> %Robot{facing: :north}
+      :south -> %Robot{facing: :east}
+      :west  -> %Robot{facing: :south}
+    end
   end
 
-  def move_west(robot) do
-    %{east: robot.east - 1}
+  @doc """
+  Turns the robot right
+
+      iex> alias ToyRobot.Robot
+      ToyRobot.Robot
+      iex> robot = %Robot{facing: :north}
+      %Robot{facing: :north}
+      iex> robot |> Robot.turn_right()
+      %Robot{facing: :east}
+  """
+  def turn_right (%Robot{facing: facing}) do
+    case facing do
+      :north -> %Robot{facing: :east}
+      :east  -> %Robot{facing: :south}
+      :south -> %Robot{facing: :west}
+      :west  -> %Robot{facing: :north}
+    end
   end
 
-  def move_north(robot) do
-    %{north: robot.north + 1}
+  defp move_north(robot) do
+    %Robot{north: robot.north + 1}
   end
 
-  def move_south(robot) do
-    %{north: robot.north - 1}
+  defp move_east(robot) do
+    %Robot{east: robot.east + 1}
+  end
+
+  defp move_west(robot) do
+    %Robot{east: robot.east - 1}
+  end
+
+  defp move_south(robot) do
+    %Robot{north: robot.north - 1}
   end
 end
