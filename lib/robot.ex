@@ -2,7 +2,17 @@ defmodule ToyRobot.Robot do
   alias ToyRobot.Robot
   defstruct [north: 0, east: 0, facing: :north]
 
-# Function to ensure robot is moving in specified direction
+  @doc """
+    Robot moves forward one space
+
+      iex>alias ToyRobot.Robot
+      ToyRobot.Robot
+      iex> robot = %Robot{north: 0, facing: :north}
+      %Robot{north: 0, facing: :north}
+      iex> robot |> Robot.move
+      %Robot{north: 1, facing: :north}
+
+  """
   def move(%Robot{facing: facing} = robot) do
     case facing do
       :north -> robot |> move_north
@@ -23,13 +33,15 @@ defmodule ToyRobot.Robot do
      %Robot{facing: :west}
 
   """
-  def turn_left(%Robot{facing: facing}) do
-    case facing  do
-      :north -> %Robot{facing: :west}
-      :east  -> %Robot{facing: :north}
-      :south -> %Robot{facing: :east}
-      :west  -> %Robot{facing: :south}
+  def turn_left(%Robot{facing: facing} = robot) do
+    new_facing = case facing  do
+      :north -> :west
+      :east  -> :north
+      :south -> :east
+      :west  -> :south
     end
+
+    %Robot{robot | facing: new_facing}
   end
 
   @doc """
@@ -42,28 +54,29 @@ defmodule ToyRobot.Robot do
       iex> robot |> Robot.turn_right()
       %Robot{facing: :east}
   """
-  def turn_right (%Robot{facing: facing}) do
-    case facing do
-      :north -> %Robot{facing: :east}
-      :east  -> %Robot{facing: :south}
-      :south -> %Robot{facing: :west}
-      :west  -> %Robot{facing: :north}
+  def turn_right (%Robot{facing: facing} = robot) do
+    new_facing = case facing do
+      :north -> :east
+      :east -> :south
+      :south -> :west
+      :west -> :north
     end
+    %Robot{robot | facing: new_facing}
   end
 
-  defp move_north(robot) do
-    %Robot{north: robot.north + 1}
+  defp move_north(%Robot{} = robot) do
+    %Robot{robot | north: robot.north + 1}
   end
 
-  defp move_east(robot) do
-    %Robot{east: robot.east + 1}
+  defp move_east(%Robot{} = robot) do
+    %Robot{robot | east: robot.east + 1}
   end
 
-  defp move_west(robot) do
-    %Robot{east: robot.east - 1}
+  defp move_west(%Robot{} = robot) do
+    %Robot{robot | east: robot.east - 1}
   end
 
-  defp move_south(robot) do
-    %Robot{north: robot.north - 1}
+  defp move_south(%Robot{} = robot) do
+    %Robot{robot | north: robot.north - 1}
   end
 end
