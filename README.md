@@ -28,3 +28,18 @@ The file is assumed to have ASCII encoding. It is assumed that the PLACE command
 space, that is PLACE 1, 2, NORTH is an invalid command. All commands must be in uppercase, all
 lower and mixed case commands will be ignored.
 
+## How to test the application
+
+### NB:The application currently does not have functionalities to read from file. More on that later.
+###    Only `move`,`turn_right`, `turn_left` should be used for the application to return results.
+
+  1. Navigate to the `test.exs` file
+  2. Under the struct `%Robot{east: 0, north: 0, facing: :north}` edit your commands as shown below:
+    ```elixir
+    Robot.move
+    Robot.turn_left
+    Robot.move
+    Robot.turn_right.
+    IO.inspect
+    ```
+  3. Run `mix run test.exs` in the terminal to display the position and the direction is facing.
