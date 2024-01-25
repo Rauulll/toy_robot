@@ -1,3 +1,0 @@
-defmodule ToyRobot do
-
-end
