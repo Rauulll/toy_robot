@@ -24,3 +24,6 @@ toy_robot-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+#manual testing for the robot
+/test.exs
