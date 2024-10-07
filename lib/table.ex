@@ -19,5 +19,4 @@ defmodule ToyRobot.Table do
     north >= 0 && north <= north_boundary &&
     east >= 0 && east <= east_boundary
   end
-
 end
