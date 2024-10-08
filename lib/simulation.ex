@@ -29,7 +29,7 @@ defmodule ToyRobot.Simulation do
       iex> table = %Table{north_boundary: 4, east_boundary: 4}
       %Table{north_boundary: 4, east_boundary: 4}
       iex> Simulation.place(table, %{north: 6, east: 0, facing: :north})
-      {:error, :invalid_placemnt}
+      {:error, :invalid_placement}
   """
 
   def place(table, placement) do
@@ -42,7 +42,7 @@ defmodule ToyRobot.Simulation do
         }
       }
     else
-      {:error, :invalid_placemnt}
+      {:error, :invalid_placement}
     end
   end
 
