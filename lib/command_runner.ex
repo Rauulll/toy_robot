@@ -14,8 +14,13 @@ defmodule ToyRobot.CommandRunner do
   def run([]), do: nil
 
   def run([:move | rest], simulation) do
-    {:ok, simulation} = simulation |> Simulation.move()
-    run(rest, simulation)
+    new_simulation = simulation
+    |> Simulation.move
+    |> case do
+      {:ok, simulation} -> simulation
+      {:error, :at_table_boundary} -> simulation
+    end
+    run(rest, new_simulation)
   end
 
   def run([], simulation), do: simulation
