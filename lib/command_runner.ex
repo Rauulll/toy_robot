@@ -23,5 +23,15 @@ defmodule ToyRobot.CommandRunner do
     run(rest, new_simulation)
   end
 
+  def run([:turn_right | rest], simulation) do
+    {:ok, simulation} = simulation |> Simulation.turn_right
+    run(rest, simulation)
+  end
+
+  def run([:turn_left | rest], simulation) do
+    {:ok, simulation} = simulation |> Simulation.turn_left
+    run(rest, simulation)
+  end
+
   def run([], simulation), do: simulation
 end
