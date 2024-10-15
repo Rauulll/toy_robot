@@ -1,5 +1,5 @@
 defmodule ToyRobot.CommandRunnerTests do
-  use ExUnit.Case, async:
+  use ExUnit.Case, async: true
 
   import ExUnit.CaptureIO
 
