@@ -1,5 +1,7 @@
 defmodule ToyRobot.CommandRunnerTests do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async:
+
+  import ExUnit.CaptureIO
 
   alias ToyRobot.{CommandRunner, Simulation}
 
@@ -69,5 +71,29 @@ defmodule ToyRobot.CommandRunnerTests do
     assert robot.east == 1
     assert robot.north == 2
     assert robot.facing == :east
+  end
+
+  test "handles a place + report command" do
+    commands = [
+      {:place, %{east: 1, north: 2, facing: :north}},
+      :report
+    ]
+
+    output = capture_io fn ->
+      CommandRunner.run(commands)
+    end
+
+    assert output |> String.trim == "The robot is at (1, 2) and is facing NORTH"
+  end
+
+  test "handles a place + invalid commands" do
+    %Simulation{robot: robot} = [
+      {:place, %{east: 1, north: 2, facing: :north}},
+      {:invalid, "EXTERMINATE"}
+    ] |> CommandRunner.run()
+
+   assert robot.east == 1
+   assert robot.north == 2
+   assert robot.facing == :north
   end
 end

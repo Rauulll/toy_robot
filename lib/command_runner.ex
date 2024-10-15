@@ -13,6 +13,8 @@ defmodule ToyRobot.CommandRunner do
 
   def run([]), do: nil
 
+  def run([{:invalid, _command} | rest], simulation), do: run(rest, simulation)
+
   def run([:move | rest], simulation) do
     new_simulation = simulation
     |> Simulation.move
@@ -30,6 +32,19 @@ defmodule ToyRobot.CommandRunner do
 
   def run([:turn_left | rest], simulation) do
     {:ok, simulation} = simulation |> Simulation.turn_left
+    run(rest, simulation)
+  end
+
+  def run([:report | rest], simulation) do
+    %{
+    east: east,
+    north: north,
+    facing: facing
+    } = Simulation.report(simulation)
+
+    facing = facing |> Atom.to_string |> String.upcase
+    IO.puts "The robot is at (#{east}, #{north}) and is facing #{facing}"
+
     run(rest, simulation)
   end
 
